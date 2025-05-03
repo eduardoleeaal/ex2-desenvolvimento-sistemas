@@ -1,3 +1,4 @@
+<?php require_once('validacoes.php'); ?>
 <!DOCTYPE html>
 <html lang="pr-br">
 <head>
@@ -8,26 +9,44 @@
 <body>
     
 <?php
-     if (empty($_POST['nomeApa'])) {
-        $erros[] = 'Campo nome do aparelho vazio<br>';
+     if (empty($_POST['titulo'])) {
+        $erros[] = 'Campo titulo vazio<br>';
     }
-    if (empty($_POST['consumoWatts'])) {
-        $erros[] = 'Campo consumo máximo em watts vazio<br>';
+    if (empty($_POST['autor'])) {
+        $erros[] = 'Campo autor vazio<br>';
     }
-    if (empty($_POST['horasLigado'])) {
-        $erros[] = 'Campo número de horas ligado por dia vazio<br>';
+    if (empty($_POST['preco'])) {
+        $erros[] = 'Campo preco vazio<br>';
     }
-    if (empty($_POST['diasLigado'])) {
-        $erros[] = 'Campo número de dias ligado ao mês vazio<br>';
+    if (empty($_POST['qntestoque'])) {
+        $erros[] = 'Campo Quantidade em Estoque vazio<br>';
     }
-    if (empty($_POST['valorKWatt'])) {
-        $erros[] = 'Campo valor do kW/h vazio<br>';
-    }
+
 
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         if (!isset($erros)) {
+            $livro = [
+                'titulo' => $_POST['titulo'],
+                'autor' => $_POST['autor'],
+                'preco' => $_POST['preco'],
+                'qntEstoque' => $_POST['qntestoque']
+            ];
+
+            if(validar_livro($livro)) {
+                echo "TITULO VAZIO";
+            } else {
+                echo "TITULO CERTO";
+            }
             
+        } else {
+            echo "<h2>Erro ao cadastrar livro</h2>";
+            foreach ($erros as $erroatual) {
+                echo $erroatual;
+            }
+            require_once('index.php');
         }
+    } else {
+        echo "VOCÊ NÃO ENVIOU O FORMULÁRIO";
     }
 ?>
 </body>
