@@ -9,45 +9,32 @@
 <body>
     
 <?php
-     if (empty($_POST['titulo'])) {
-        $erros[] = 'Campo titulo vazio<br>';
-    }
-    if (empty($_POST['autor'])) {
-        $erros[] = 'Campo autor vazio<br>';
-    }
-    if (empty($_POST['preco'])) {
-        $erros[] = 'Campo preco vazio<br>';
-    }
-    if (empty($_POST['qntestoque'])) {
-        $erros[] = 'Campo Quantidade em Estoque vazio<br>';
-    }
+    if (validar_formulario_post($_SERVER)) {
+        echo '<h2>VOCÊ NÃO ENVIOU O FORMULÁRIO<h2>';
+        echo '<a href="index.php">Voltar ao início</a>';
+        exit;
+    } 
 
-
-    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-        if (!isset($erros)) {
-            $livro = [
-                'titulo' => $_POST['titulo'],
-                'autor' => $_POST['autor'],
-                'preco' => $_POST['preco'],
-                'qntEstoque' => $_POST['qntestoque']
-            ];
-
-            if(validar_livro($livro)) {
-                echo "TITULO VAZIO";
-            } else {
-                echo "TITULO CERTO";
-            }
-            
-        } else {
-            echo "<h2>Erro ao cadastrar livro</h2>";
-            foreach ($erros as $erroatual) {
-                echo $erroatual;
-            }
-            require_once('index.php');
-        }
+    $livro = [
+        'titulo' => $_POST['titulo'],
+        'autor' => $_POST['autor'],
+        'preco' => $_POST['preco'],
+        'qntEstoque' => $_POST['qntestoque']
+    ];   
+    
+    if(!validar_livro($livro)){
+        echo '<h3>Erro!</h3>';
+        echo '<a href="index.php">Voltar ao início</a>';
+        exit;
     } else {
-        echo "VOCÊ NÃO ENVIOU O FORMULÁRIO";
+        $valorTotal = calcularValorTotalEstoque($livro);
+        echo "<h2>Dados do Livro:</h2>";
+        foreach ($livro as $chave => $valor) {
+            echo "<br>". ucfirst($chave) . ": " . "$valor";
+        }
+        echo "<br>Valor total do estoque: R$" . $valorTotal;
     }
+  
 ?>
 </body>
 </html>

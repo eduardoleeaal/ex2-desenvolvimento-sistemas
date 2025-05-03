@@ -53,10 +53,10 @@
             <input type="text" name="autor" id="autor" placeholder="Autor"  >
 
         <label for="preco">Preço</label>
-            <input type="number" name="preco" id="preco" step="0.01" min="0.01" placeholder="Preço Unitário" required>
+            <input type="number" name="preco" id="preco" step="0.01" placeholder="Preço Unitário">
 
         <label for="qntestoque">Quantidade em Estoque</label>
-            <input type="number" name="qntestoque" id="qntestoque" step="1" min="1" placeholder="Quantidade em estoque" required>
+            <input type="number" name="qntestoque" id="qntestoque" step="1" placeholder="Quantidade em estoque" >
 
         <button type="submit">Enviar</button>
     </form>
